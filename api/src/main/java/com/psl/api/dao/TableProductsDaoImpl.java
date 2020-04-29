@@ -2,7 +2,9 @@ package com.psl.api.dao;
 
 import com.psl.api.bean.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -42,6 +44,30 @@ public class TableProductsDaoImpl extends JdbcDaoSupport implements TableProduct
                     product.setProductDesc(resultSet.getString("product_desc"));
                     return product;
                 }
+            });
+        }catch(EmptyResultDataAccessException e)
+        {
+            return null;
+        }
+    }
+
+    @Override
+    public Product getProductFromTable(String table_name, int productId) {
+        sql = "SELECT * FROM " + table_name + " WHERE product_id = " + productId;
+
+        try{
+            return this.getJdbcTemplate().query(sql, new ResultSetExtractor<Product>(){
+
+                @Override
+                public Product extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+                    Product product = new Product();
+                    resultSet.next();
+                    product.setProductId(resultSet.getInt("product_id"));
+                    product.setProductName(resultSet.getString("product_name"));
+                    product.setProductDesc(resultSet.getString("product_desc"));
+                    return product;
+                }
+
             });
         }catch(EmptyResultDataAccessException e)
         {

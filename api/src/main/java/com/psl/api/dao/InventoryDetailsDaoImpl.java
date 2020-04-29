@@ -38,7 +38,7 @@ public class InventoryDetailsDaoImpl extends JdbcDaoSupport implements Inventory
                     inventoryDetails.setInventoryId(resultSet.getInt("inventory_id"));
                     inventoryDetails.setCategoryId(resultSet.getInt("category_id"));
                     inventoryDetails.setExpiryDate(resultSet.getDate("expiry_date"));
-                    inventoryDetails.setManufacturingDate(resultSet.getDate("mgf_date"));
+                    inventoryDetails.setManufacturingDate(resultSet.getDate("mfg_date"));
                     inventoryDetails.setProductId(resultSet.getInt("product_id"));
                     inventoryDetails.setQuantity(resultSet.getInt("quantity"));
                     inventoryDetails.setUnitPrice(resultSet.getDouble("unit_price"));
